@@ -623,6 +623,14 @@ server:
               release: "{{ .Release.Name }}"
               component: server
           topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: node_type
+            operator: In
+            values:
+            - vault
   # Toleration settings for server pods. This
   # should be a multi-line string matching the Tolerations
   # (https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/) array in a Pod spec.
@@ -961,7 +969,16 @@ client:
   #           operator: DoesNotExist
   # ```
   # @type: string
-  affinity: null
+  affinity: |
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: node_type
+            operator: In
+            values:
+            - vault
+
 
   # This value references an existing
   # Kubernetes `priorityClassName` (https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#pod-priority)
