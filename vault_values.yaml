@@ -164,15 +164,7 @@ injector:
   # This can either be multi-line string or YAML matching the PodSpec's affinity field.
   # Commenting out or setting as empty the affinity variable, will allow
   # deployment of multiple replicas to single node services such as Minikube.
-  affinity: |
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: {{ template "vault.name" . }}-agent-injector
-              app.kubernetes.io/instance: "{{ .Release.Name }}"
-              component: webhook
-          topologyKey: kubernetes.io/hostname
+  affinity: {}
   # Toleration Settings for injector pods
   # This should be either a multi-line string or YAML matching the Toleration array
   # in a PodSpec.
@@ -245,13 +237,7 @@ server:
   logFormat: ""
 
   # resources: {}
-  resources:
-    requests:
-      memory: 1024Mi
-      cpu: 1024m
-    limits:
-      memory: 1536Mi
-      cpu: 1536m
+  resources: {}
 
   # Ingress allows ingress services to be created to allow external access
   # from Kubernetes to access Vault pods.
@@ -418,23 +404,7 @@ server:
   # Commenting out or setting as empty the affinity variable, will allow
   # deployment to single node services such as Minikube
   # This should be either a multi-line string or YAML matching the PodSpec's affinity field.
-  affinity: |
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: {{ template "vault.name" . }}
-              app.kubernetes.io/instance: "{{ .Release.Name }}"
-              component: server
-          topologyKey: kubernetes.io/hostname
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: node_type
-            operator: In
-            values:
-            - vault
+  affinity: {}
   # Toleration Settings for server pods
   # This should be either a multi-line string or YAML matching the Toleration array
   # in a PodSpec.

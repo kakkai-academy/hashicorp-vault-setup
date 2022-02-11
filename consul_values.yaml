@@ -318,11 +318,11 @@ global:
   consulSidecarContainer:
     resources:
       requests:
-        memory: "25Mi"
-        cpu: "20m"
+        memory: null
+        cpu: null
       limits:
-        memory: "50Mi"
-        cpu: "20m"
+        memory: null
+        cpu: null
 
   # The name (and tag) of the Envoy Docker image used for the
   # connect-injected sidecar proxies and mesh, terminating, and ingress gateways.
@@ -491,11 +491,11 @@ server:
   # @type: map
   resources:
     requests:
-      memory: 1024Mi
-      cpu: 1024m
+      memory: null
+      cpu: null
     limits:
-      memory: 1536Mi
-      cpu: 1536m
+      memory: null
+      cpu: null
 
   # The security context for the server pods. This should be a YAML map corresponding to a
   # Kubernetes [SecurityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) object.
@@ -614,23 +614,7 @@ server:
   #             component: server
   #       topologyKey: kubernetes.io/hostname
   # ```
-  affinity: |
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app: {{ template "consul.name" . }}
-              release: "{{ .Release.Name }}"
-              component: server
-          topologyKey: kubernetes.io/hostname
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: node_type
-            operator: In
-            values:
-            - vault
+  affinity: null
   # Toleration settings for server pods. This
   # should be a multi-line string matching the Tolerations
   # (https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/) array in a Pod spec.
@@ -841,11 +825,11 @@ client:
   # @type: map
   resources:
     requests:
-      memory: "100Mi"
-      cpu: "100m"
+      memory: null
+      cpu: null
     limits:
-      memory: "100Mi"
-      cpu: "100m"
+      memory: null
+      cpu: null
 
   # The security context for the client pods. This should be a YAML map corresponding to a
   # Kubernetes [SecurityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) object.
@@ -969,16 +953,7 @@ client:
   #           operator: DoesNotExist
   # ```
   # @type: string
-  affinity: |
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: node_type
-            operator: In
-            values:
-            - vault
-
+  affinity: null
 
   # This value references an existing
   # Kubernetes `priorityClassName` (https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#pod-priority)
@@ -1085,11 +1060,11 @@ client:
     # @type: map
     resources:
       requests:
-        memory: "50Mi"
-        cpu: "50m"
+        memory: null
+        cpu: null
       limits:
-        memory: "50Mi"
-        cpu: "50m"
+        memory: null
+        cpu: null
 
     # Optional PEM-encoded CA certificate that will be added to the trusted system CAs.
     # Useful if using an S3-compatible storage exposing a self-signed certificate.
@@ -1462,11 +1437,11 @@ syncCatalog:
   # @type: map
   resources:
     requests:
-      memory: "50Mi"
-      cpu: "50m"
+      memory: null
+      cpu: null
     limits:
-      memory: "50Mi"
-      cpu: "50m"
+      memory: null
+      cpu: null
 
   # Override global log verbosity level. One of "debug", "info", "warn", or "error".
   # @type: string
@@ -1599,11 +1574,11 @@ connectInject:
   # @type: map
   resources:
     requests:
-      memory: "50Mi"
-      cpu: "50m"
+      memory: null
+      cpu: null
     limits:
-      memory: "50Mi"
-      cpu: "50m"
+      memory: null
+      cpu: null
 
   # Sets the failurePolicy for the mutating webhook. By default this will cause pods not part of the consul installation to fail scheduling while the webhook
   # is offline. This prevents a pod from skipping mutation if the webhook were to be momentarily offline.
@@ -1767,11 +1742,11 @@ connectInject:
   initContainer:
     resources:
       requests:
-        memory: "25Mi"
-        cpu: "50m"
+        memory: null
+        cpu: null
       limits:
-        memory: "150Mi"
-        cpu: "50m"
+        memory: null
+        cpu: null
 
 # Controller handles config entry custom resources.
 # Requires consul >= 1.8.4.
@@ -1805,11 +1780,11 @@ controller:
   # @type: map
   resources:
     limits:
-      cpu: 100m
-      memory: 50Mi
+      cpu: null
+      memory: null
     requests:
-      cpu: 100m
-      memory: 50Mi
+      cpu: null
+      memory: null
 
   # Optional YAML string to specify a nodeSelector config.
   # @type: string
@@ -1822,23 +1797,7 @@ controller:
   # Affinity Settings
   # This should be a multi-line string matching the affinity object
   # @type: string
-  affinity: |
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: {{ template "consul.name" . }}
-              app.kubernetes.io/instance: "{{ .Release.Name }}"
-              component: server
-          topologyKey: kubernetes.io/hostname
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: node_type
-            operator: In
-            values:
-            - vault
+  affinity: null
 
   # Optional priorityClassName.
   priorityClassName: ""
@@ -1995,11 +1954,11 @@ meshGateway:
   # @type: map
   resources:
     requests:
-      memory: "100Mi"
-      cpu: "100m"
+      memory: null
+      cpu: null
     limits:
-      memory: "100Mi"
-      cpu: "100m"
+      memory: null
+      cpu: null
 
   # Resource settings for the `copy-consul-bin` init container.
   # @recurse: false
@@ -2007,24 +1966,16 @@ meshGateway:
   initCopyConsulContainer:
     resources:
       requests:
-        memory: "25Mi"
-        cpu: "50m"
+        memory: null
+        cpu: null
       limits:
-        memory: "150Mi"
-        cpu: "50m"
+        memory: null
+        cpu: null
 
   # By default, we set an anti-affinity so that two gateway pods won't be
   # on the same node. NOTE: Gateways require that Consul client agents are
   # also running on the nodes alongside each gateway pod.
-  affinity: |
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app: {{ template "consul.name" . }}
-              release: "{{ .Release.Name }}"
-              component: mesh-gateway
-          topologyKey: kubernetes.io/hostname
+  affinity: null
   # Optional YAML string to specify tolerations.
   # @type: string
   tolerations: null
@@ -2124,11 +2075,11 @@ ingressGateways:
     # @type: map
     resources:
       requests:
-        memory: "100Mi"
-        cpu: "100m"
+        memory: null
+        cpu: null
       limits:
-        memory: "100Mi"
-        cpu: "100m"
+        memory: null
+        cpu: null
 
     # Resource settings for the `copy-consul-bin` init container.
     # @recurse: false
@@ -2136,24 +2087,16 @@ ingressGateways:
     initCopyConsulContainer:
       resources:
         requests:
-          memory: "25Mi"
-          cpu: "50m"
+          memory: null
+          cpu: null
         limits:
-          memory: "150Mi"
-          cpu: "50m"
+          memory: null
+          cpu: null
 
     # By default, we set an anti-affinity so that two of the same gateway pods
     # won't be on the same node. NOTE: Gateways require that Consul client agents are
     # also running on the nodes alongside each gateway pod.
-    affinity: |
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                app: {{ template "consul.name" . }}
-                release: "{{ .Release.Name }}"
-                component: ingress-gateway
-            topologyKey: kubernetes.io/hostname
+    affinity: null
     # Optional YAML string to specify tolerations.
     # @type: string
     tolerations: null
@@ -2233,11 +2176,11 @@ terminatingGateways:
     # @type: map
     resources:
       requests:
-        memory: "100Mi"
-        cpu: "100m"
+        memory: null
+        cpu: null
       limits:
-        memory: "100Mi"
-        cpu: "100m"
+        memory: null
+        cpu: null
 
     # Resource settings for the `copy-consul-bin` init container.
     # @recurse: false
@@ -2245,24 +2188,16 @@ terminatingGateways:
     initCopyConsulContainer:
       resources:
         requests:
-          memory: "25Mi"
-          cpu: "50m"
+          memory: null
+          cpu: null
         limits:
-          memory: "150Mi"
-          cpu: "50m"
+          memory: null
+          cpu: null
 
     # By default, we set an anti-affinity so that two of the same gateway pods
     # won't be on the same node. NOTE: Gateways require that Consul client agents are
     # also running on the nodes alongside each gateway pod.
-    affinity: |
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                app: {{ template "consul.name" . }}
-                release: "{{ .Release.Name }}"
-                component: terminating-gateway
-            topologyKey: kubernetes.io/hostname
+    affinity: null
     # Optional YAML string to specify tolerations.
     # @type: string
     tolerations: null
