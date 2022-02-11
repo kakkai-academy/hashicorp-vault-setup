@@ -17,6 +17,7 @@ vault operator init
 ```
 
 # Vault Unseal Step
+- unseal by ssh to each pod and then fill unseal key 3 times by unique key per node
 ```
 vault operator unseal
 ```
